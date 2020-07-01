@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:farmers_market/src/theme/textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,8 +26,37 @@ class Login extends StatelessWidget {
               fit: BoxFit.fill
             ),
           ),
-        )
+        ),
+        Container(
+          height: 200.0,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/logo.png"),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: TextFieldStyles.textBoxHorizontal(), vertical: TextFieldStyles.textBoxVertical()),
+          child: email(),
+        ),
+        password(),
       ],
     );
+  }
+}
+
+Widget email(){
+  if(Platform.isIOS){
+    return CupertinoTextField();
+  }else{
+    return TextField();
+  }
+}
+
+Widget password(){
+  if(Platform.isIOS){
+    return CupertinoTextField();
+  }else{
+    return TextField();
   }
 }
