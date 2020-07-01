@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "178047580467",
+    "firebase_url": "https://farmers-market-3ed05.firebaseio.com",
+    "project_id": "farmers-market-3ed05",
+    "storage_bucket": "farmers-market-3ed05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178047580467:android:507e708380131123866646",
+        "android_client_info": {
+          "package_name": "com.nono.farmers_market"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178047580467-g9jn98aka87upi4gkamheu646ub4sn7c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nono.farmers_market",
+            "certificate_hash": "8a92170b3696d6fe302193cc08a07e2625b401d2"
+          }
+        },
+        {
+          "client_id": "178047580467-uihcaj6jbj5bk95u93m0gushgl1mg68r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6OfdlARqiH0U4-wCuyJ7MSQ_OPzwQ59Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178047580467-uihcaj6jbj5bk95u93m0gushgl1mg68r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
