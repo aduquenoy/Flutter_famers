@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:farmers_market/src/theme/textfield.dart';
+import 'package:farmers_market/widget/textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +21,8 @@ class Login extends StatelessWidget {
           height: MediaQuery.of(context).size.height * .2,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/top_bg.png"),
-              fit: BoxFit.fill
-            ),
+                image: AssetImage("assets/images/top_bg.png"),
+                fit: BoxFit.fill),
           ),
         ),
         Container(
@@ -35,28 +33,21 @@ class Login extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: TextFieldStyles.textBoxHorizontal(), vertical: TextFieldStyles.textBoxVertical()),
-          child: email(),
+        AppTextField(
+          isIOS: Platform.isIOS,
+          hintText: "Email",
+          materialIcon: Icons.email,
+          cupertinoIcon: CupertinoIcons.mail_solid,
+          textInputType: TextInputType.emailAddress,
         ),
-        password(),
+        AppTextField(
+          isIOS: Platform.isIOS,
+          hintText: "Password",
+          materialIcon: Icons.lock,
+          cupertinoIcon: IconData(0xf4c9,fontFamily: CupertinoIcons.iconFont,fontPackage: CupertinoIcons.iconFontPackage),
+          obscureText: true,
+        ),
       ],
     );
-  }
-}
-
-Widget email(){
-  if(Platform.isIOS){
-    return CupertinoTextField();
-  }else{
-    return TextField();
-  }
-}
-
-Widget password(){
-  if(Platform.isIOS){
-    return CupertinoTextField();
-  }else{
-    return TextField();
   }
 }
