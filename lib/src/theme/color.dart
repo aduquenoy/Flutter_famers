@@ -15,4 +15,8 @@ abstract class AppColors{
   static Color get bordertextfield => const Color(0xFFe2a84b);
 
   static Color get titre => const Color(0xFFee5253);
+
+  static Color get facebook => const Color(0xFF3b5998);
+
+  static Color get google => const Color(0xFF4285f4);
 }

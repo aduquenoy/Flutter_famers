@@ -1,6 +1,12 @@
 import 'dart:io';
+import 'dart:ui';
+import 'package:farmers_market/src/theme/base.dart';
+import 'package:farmers_market/src/theme/text.dart';
+import 'package:farmers_market/widget/button.dart';
+import 'package:farmers_market/widget/social.dart';
 import 'package:farmers_market/widget/textfield.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -44,9 +50,56 @@ class Login extends StatelessWidget {
           isIOS: Platform.isIOS,
           hintText: "Password",
           materialIcon: Icons.lock,
-          cupertinoIcon: IconData(0xf4c9,fontFamily: CupertinoIcons.iconFont,fontPackage: CupertinoIcons.iconFontPackage),
+          cupertinoIcon: IconData(0xf4c9,
+              fontFamily: CupertinoIcons.iconFont,
+              fontPackage: CupertinoIcons.iconFontPackage),
           obscureText: true,
         ),
+        AppButton(
+          buttonText: "Login",
+          buttonType: ButtonType.BorderTextfield,
+        ),
+        SizedBox(height: 6.0,),
+        Center(
+          child: Text(
+            "or",
+            style: TextStyles.suggestion,
+          ),
+        ),
+        SizedBox(height: 6.0,),
+        Padding(
+          padding: BaseStyles.listPadding,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              AppSocialButton(
+                socialType: SocialType.Facebook,
+              ),
+              SizedBox(width: 15.0),
+              AppSocialButton(
+                socialType: SocialType.Google,
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: BaseStyles.listPadding,
+          child: RichText(
+            text: TextSpan(
+              text: "New here? ",
+              style: TextStyles.body,
+              children: [
+                TextSpan(
+                  text: "Signup",
+                  style: TextStyles.link,
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => Navigator.pushNamed(context, "/signup")
+                )
+              ]
+            ),
+            textAlign: TextAlign.center,
+          ),
+        )
       ],
     );
   }

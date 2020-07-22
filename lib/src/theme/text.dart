@@ -4,10 +4,44 @@ import 'package:google_fonts/google_fonts.dart';
 
 abstract class TextStyles {
   static TextStyle get body => GoogleFonts.roboto(
-      textStyle: TextStyle(color: AppColors.darkgray, fontSize: 16.0),
-    );
+        textStyle: TextStyle(
+          color: AppColors.darkgray,
+          fontSize: 16.0,
+        ),
+      );
+
+  static TextStyle get link => GoogleFonts.roboto(
+        textStyle: TextStyle(
+          color: AppColors.bordertextfield,
+          fontSize: 16.0,
+          fontWeight: FontWeight.bold,
+        ),
+      );
 
   static TextStyle get suggestion => GoogleFonts.roboto(
-      textStyle: TextStyle(color: AppColors.lightgray, fontSize: 14.0),
+        textStyle: TextStyle(
+          color: AppColors.lightgray,
+          fontSize: 14.0,
+        ),
+      );
+
+  static TextStyle get buttonTextLight {
+    return GoogleFonts.roboto(
+      textStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 16.0,
+        fontWeight: FontWeight.bold,
+      ),
     );
+  }
+
+  static TextStyle get buttonTextDark {
+    return GoogleFonts.roboto(
+      textStyle: TextStyle(
+        color: AppColors.darkgray,
+        fontSize: 16.0,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
 }
