@@ -39,12 +39,13 @@ abstract class TextFieldStyles {
     );
   }
 
-  static InputDecoration materialDecoration(String hintText, IconData icon) {
+  static InputDecoration materialDecoration(String hintText, IconData icon, String errorText) {
     return InputDecoration(
       contentPadding: EdgeInsets.all(8.0),
       hintText: hintText,
       hintStyle: TextFieldStyles.placeholder,
       border: InputBorder.none,
+      errorText: errorText,
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.bordertextfield,
@@ -55,6 +56,20 @@ abstract class TextFieldStyles {
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.bordertextfield,
+          width: BaseStyles.borderWidth,
+        ),
+        borderRadius: BorderRadius.circular(BaseStyles.borderRadius)
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.bordertextfield,
+          width: BaseStyles.borderWidth,
+        ),
+        borderRadius: BorderRadius.circular(BaseStyles.borderRadius)
+      ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.titre,
           width: BaseStyles.borderWidth,
         ),
         borderRadius: BorderRadius.circular(BaseStyles.borderRadius)

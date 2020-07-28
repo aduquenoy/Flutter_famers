@@ -12,7 +12,7 @@ class AuthBloc{
   //Get data
   Stream<String> get email => _email.stream.transform(validateEmail);
   Stream<String> get password => _password.stream.transform(validatePassword);
-  Stream<bool> get isValid => CombineLatestStream.combine2(email, password, (email, password) => null);
+  Stream<bool> get isValid => CombineLatestStream.combine2(email, password, (email, password) => true);
 
   //Set data
   Function(String) get changeEmail => _email.sink.add;
