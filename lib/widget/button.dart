@@ -4,7 +4,7 @@ import 'package:farmers_market/src/theme/color.dart';
 import 'package:farmers_market/src/theme/text.dart';
 import 'package:flutter/material.dart';
 
-class AppButton extends StatelessWidget {
+class AppButton extends StatefulWidget {
 
   final String buttonText;
   final ButtonType buttonType;
@@ -12,12 +12,20 @@ class AppButton extends StatelessWidget {
   AppButton({@required this.buttonText, this.buttonType});
 
   @override
+  _AppButtonState createState() => _AppButtonState();
+}
+
+class _AppButtonState extends State<AppButton> {
+
+  bool pressed = false;
+
+  @override
   Widget build(BuildContext context) {
 
     TextStyle fontStyle;
     Color buttonColor;
 
-    switch(buttonType){
+    switch(widget.buttonType){
       case ButtonType.BorderTextfield:
       fontStyle = TextStyles.buttonTextLight;
       buttonColor = AppColors.bordertextfield;
@@ -34,8 +42,8 @@ class AppButton extends StatelessWidget {
       fontStyle = TextStyles.buttonTextLight;
       buttonColor = AppColors.darkgray;
       break;
-      case ButtonType.LightGray:
-      fontStyle = TextStyles.buttonTextDark;
+      case ButtonType.Disabled:
+      fontStyle = TextStyles.buttonTextLight;
       buttonColor = AppColors.lightgray;
       break;
       default:
@@ -45,19 +53,41 @@ class AppButton extends StatelessWidget {
     }
 
     return Padding(
-      padding: BaseStyles.listPadding,
-      child: Container(
-        height: ButtonStyles.buttonHeight,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-            color: buttonColor,
-            borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
-        child: Center(
-          child: Text(
-            buttonText,
-            style: fontStyle,
+      padding: EdgeInsets.only(
+        top: (pressed) ? BaseStyles.listFieldVertical + BaseStyles.animationOffset : BaseStyles.listFieldVertical,
+        bottom: (pressed) ? BaseStyles.listFieldVertical - BaseStyles.animationOffset : BaseStyles.listFieldVertical,
+        left: BaseStyles.listFieldHorizontal,
+        right: BaseStyles.listFieldHorizontal
+      ),
+      child: GestureDetector(
+              child: Container(
+          height: ButtonStyles.buttonHeight,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              color: buttonColor,
+              borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
+          child: Center(
+            child: Text(
+              widget.buttonText,
+              style: fontStyle,
+            ),
           ),
         ),
+      onTapDown: (details){
+        setState(() {
+          if(widget.buttonType != ButtonType.Disabled) pressed = !pressed;
+        });
+      },
+      onTapUp: (details){
+        setState(() {
+          if(widget.buttonType != ButtonType.Disabled) pressed = !pressed;
+        });
+      },
+      onTap: (){
+        if(widget.buttonType != ButtonType.Disabled){
+          
+        }
+      },
       ),
     );
   }
@@ -66,7 +96,7 @@ class AppButton extends StatelessWidget {
 enum ButtonType{
   LightBlue,
   BorderTextfield,
-  LightGray,
+  Disabled,
   DarkGray,
   DarkBlue
 }

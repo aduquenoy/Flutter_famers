@@ -25,6 +25,13 @@ abstract class TextStyles {
         ),
       );
 
+  static TextStyle get error => GoogleFonts.roboto(
+        textStyle: TextStyle(
+          color: AppColors.titre,
+          fontSize: 12.0,
+        ),
+      );
+
   static TextStyle get buttonTextLight {
     return GoogleFonts.roboto(
       textStyle: TextStyle(
