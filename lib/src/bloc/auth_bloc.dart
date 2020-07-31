@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:farmers_market/src/model/user.dart';
+import 'package:farmers_market/src/service/firestore_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -8,6 +11,8 @@ final RegExp regExpEmail = RegExp(
 class AuthBloc{
   final _email = BehaviorSubject<String>();
   final _password = BehaviorSubject<String>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirestoreService _firestoreService = FirestoreService();
 
   //Get data
   Stream<String> get email => _email.stream.transform(validateEmail);
@@ -39,4 +44,16 @@ class AuthBloc{
       sink.addError("8 characters minimum");
     }
   });
+
+  //Functions
+  signupEmail() async {
+    print("signup with email & pass");
+    try{
+      AuthResult authResult = await _auth.createUserWithEmailAndPassword(email: _email.value.trim(), password: _password.value.trim());
+      var user = User(userId: authResult.user.uid, email: _email.value.trim());
+      await _firestoreService.addUser(user);
+    }catch(error){
+      print(error);
+    }
+  }
 }

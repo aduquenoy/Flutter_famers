@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     final authBloc = Provider.of<AuthBloc>(context);
 
     if (Platform.isIOS) {
@@ -45,52 +44,56 @@ class Signup extends StatelessWidget {
           ),
         ),
         StreamBuilder<String>(
-          stream: authBloc.email,
-          builder: (context, snapshot) {
-            return AppTextField(
-              isIOS: Platform.isIOS,
-              hintText: "Email",
-              materialIcon: Icons.email,
-              cupertinoIcon: CupertinoIcons.mail_solid,
-              textInputType: TextInputType.emailAddress,
-              errorText: snapshot.error,
-              onChanged: authBloc.changeEmail,
-            );
-          }
-        ),
+            stream: authBloc.email,
+            builder: (context, snapshot) {
+              return AppTextField(
+                isIOS: Platform.isIOS,
+                hintText: "Email",
+                materialIcon: Icons.email,
+                cupertinoIcon: CupertinoIcons.mail_solid,
+                textInputType: TextInputType.emailAddress,
+                errorText: snapshot.error,
+                onChanged: authBloc.changeEmail,
+              );
+            }),
         StreamBuilder<String>(
-          stream: authBloc.password,
-          builder: (context, snapshot) {
-            return AppTextField(
-              isIOS: Platform.isIOS,
-              hintText: "Password",
-              materialIcon: Icons.lock,
-              cupertinoIcon: IconData(0xf4c9,
-                  fontFamily: CupertinoIcons.iconFont,
-                  fontPackage: CupertinoIcons.iconFontPackage),
-              obscureText: true,
-              errorText: snapshot.error,
-              onChanged: authBloc.changePassword,
-            );
-          }
-        ),
+            stream: authBloc.password,
+            builder: (context, snapshot) {
+              return AppTextField(
+                isIOS: Platform.isIOS,
+                hintText: "Password",
+                materialIcon: Icons.lock,
+                cupertinoIcon: IconData(0xf4c9,
+                    fontFamily: CupertinoIcons.iconFont,
+                    fontPackage: CupertinoIcons.iconFontPackage),
+                obscureText: true,
+                errorText: snapshot.error,
+                onChanged: authBloc.changePassword,
+              );
+            }),
         StreamBuilder<bool>(
-          stream: authBloc.isValid,
-          builder: (context, snapshot) {
-            return AppButton(
-              buttonText: "Signup",
-              buttonType: (snapshot.data==true) ? ButtonType.LightBlue : ButtonType.Disabled,
-            );
-          }
-        ),        
-        SizedBox(height: 6.0,),
+            stream: authBloc.isValid,
+            builder: (context, snapshot) {
+              return AppButton(
+                buttonText: "Signup",
+                buttonType: (snapshot.data == true)
+                    ? ButtonType.LightBlue
+                    : ButtonType.Disabled,
+                onPressed: authBloc.signupEmail,
+              );
+            }),
+        SizedBox(
+          height: 6.0,
+        ),
         Center(
           child: Text(
             "or",
             style: TextStyles.suggestion,
           ),
         ),
-        SizedBox(height: 6.0,),
+        SizedBox(
+          height: 6.0,
+        ),
         Padding(
           padding: BaseStyles.listPadding,
           child: Row(
@@ -110,17 +113,15 @@ class Signup extends StatelessWidget {
           padding: BaseStyles.listPadding,
           child: RichText(
             text: TextSpan(
-              text: "Already have an account? ",
-              style: TextStyles.body,
-              children: [
-                TextSpan(
-                  text: "Login",
-                  style: TextStyles.link,
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => Navigator.pushNamed(context, "/login")
-                )
-              ]
-            ),
+                text: "Already have an account? ",
+                style: TextStyles.body,
+                children: [
+                  TextSpan(
+                      text: "Login",
+                      style: TextStyles.link,
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => Navigator.pushNamed(context, "/login"))
+                ]),
             textAlign: TextAlign.center,
           ),
         )
