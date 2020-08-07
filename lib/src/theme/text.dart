@@ -10,6 +10,21 @@ abstract class TextStyles {
         ),
       );
 
+  static TextStyle get title => GoogleFonts.poppins(
+        textStyle: TextStyle(
+          color: AppColors.darkblue,
+          fontSize: 40.0,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+
+  static TextStyle get navTitle => GoogleFonts.poppins(
+        textStyle: TextStyle(
+          color: AppColors.darkblue,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+
   static TextStyle get link => GoogleFonts.roboto(
         textStyle: TextStyle(
           color: AppColors.bordertextfield,
