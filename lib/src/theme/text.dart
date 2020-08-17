@@ -25,6 +25,13 @@ abstract class TextStyles {
         ),
       );
 
+  static TextStyle get navTitleMaterial => GoogleFonts.poppins(
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+
   static TextStyle get link => GoogleFonts.roboto(
         textStyle: TextStyle(
           color: AppColors.bordertextfield,
