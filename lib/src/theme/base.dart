@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'color.dart';
+
 abstract class BaseStyles{
   static double get borderRadius => 30.0;
   static double get borderWidth => 4.0;
@@ -9,5 +11,16 @@ abstract class BaseStyles{
   
   static EdgeInsets get listPadding{
     return EdgeInsets.symmetric(horizontal: listFieldHorizontal, vertical: listFieldVertical);
+  }
+
+  static Widget iconPrefix(IconData icon) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: Icon(
+        icon,
+        size: 20.0,
+        color: AppColors.bordertextfield,
+      ),
+    );
   }
 }

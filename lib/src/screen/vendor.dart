@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:io';
+import 'package:farmers_market/src/bloc/auth_bloc.dart';
 import 'package:farmers_market/widget/navbar.dart';
 import 'package:farmers_market/widget/order.dart';
 import 'package:farmers_market/widget/product.dart';
@@ -6,14 +8,43 @@ import 'package:farmers_market/widget/profile.dart';
 import 'package:farmers_market/widget/vendor_scafold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class Vendor extends StatelessWidget {
+class Vendor extends StatefulWidget {
+  
+  StreamSubscription _userSubscription;
+
+  @override
+  _VendorState createState() => _VendorState();
+}
+
+class _VendorState extends State<Vendor> {
+  
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, (){
+      var authBloc = Provider.of<AuthBloc>(context, listen: false);
+      
+      widget._userSubscription = authBloc.user.listen((user) {
+        if(user==null) Navigator.of(context).pushNamedAndRemoveUntil("/login", (route) => false);
+      });
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget._userSubscription.cancel();
+    super.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     if(Platform.isIOS){
       return CupertinoPageScaffold(child: NestedScrollView(headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled){
         return <Widget> [
-          AppNavbar.cupertinoNavBar(title: "Vendor name", context: context)
+          AppNavbar.cupertinoNavBar(title: "Vendor name")
         ];
       }, body: Center(child: VendorScaffold.cupertinoTabScaffold)));
     }else{

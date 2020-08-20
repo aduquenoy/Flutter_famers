@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 abstract class AppNavbar {
   static CupertinoSliverNavigationBar cupertinoNavBar(
-      {String title, BuildContext context}) {
+      {@required String title}) {
     return CupertinoSliverNavigationBar(
       largeTitle: Text(
         title,
@@ -17,7 +17,7 @@ abstract class AppNavbar {
   }
 
   static SliverAppBar materialNavBar(
-      {@required String title, @required TabBar tabBar}) {
+      {@required String title, TabBar tabBar, bool pinned,}) {
     return SliverAppBar(
       title: Text(
         title,
@@ -26,7 +26,7 @@ abstract class AppNavbar {
       backgroundColor: AppColors.darkblue,
       bottom: tabBar,
       floating: true,
-      pinned: true,
+      pinned: (pinned == null) ? true : pinned,
       snap: true,
     );
   }

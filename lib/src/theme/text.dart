@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract class TextStyles {
+
   static TextStyle get body => GoogleFonts.roboto(
         textStyle: TextStyle(
           color: AppColors.darkgray,
@@ -14,6 +15,14 @@ abstract class TextStyles {
         textStyle: TextStyle(
           color: AppColors.darkblue,
           fontSize: 40.0,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+
+  static TextStyle get subtitle => GoogleFonts.economica(
+        textStyle: TextStyle(
+          color: AppColors.bordertextfield,
+          fontSize: 30.0,
           fontWeight: FontWeight.bold,
         ),
       );
