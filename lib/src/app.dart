@@ -2,6 +2,7 @@ import 'package:farmers_market/src/bloc/auth_bloc.dart';
 import 'package:farmers_market/src/bloc/product_bloc.dart';
 import 'package:farmers_market/src/route.dart';
 import 'package:farmers_market/src/screen/landing.dart';
+import 'package:farmers_market/src/service/firestore_service.dart';
 import 'package:farmers_market/src/theme/color.dart';
 import 'package:farmers_market/src/theme/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ import 'package:provider/provider.dart';
 
 final authBloc = AuthBloc();
 final productBloc = ProductBloc();
+final firestoreService = FirestoreService();
 
 class App extends StatefulWidget {
   @override
@@ -24,7 +26,8 @@ class _AppState extends State<App> {
     return MultiProvider(providers: [
       Provider(create: (context) => authBloc),
       Provider(create: (context) => productBloc),
-      FutureProvider(create: (context) => authBloc.isLoggedIn())
+      FutureProvider(create: (context) => authBloc.isLoggedIn()),
+      StreamProvider(create: (context) => firestoreService.fetchUnitTypes()),
     ], child: PlatformApp());
   }
 

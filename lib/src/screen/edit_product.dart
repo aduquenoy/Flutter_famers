@@ -25,19 +25,17 @@ class _EditProductState extends State<EditProduct> {
 
     if (Platform.isIOS) {
       return AppSliverScaffold.cupertinoSliverScaffold(
-          navTitle: "", pageBody: pageBody(true, productBloc), context: context);
+          navTitle: "", pageBody: pageBody(true, productBloc, context), context: context);
     } else {
       return AppSliverScaffold.materialSliverScaffold(
-          navTitle: "", pageBody: pageBody(false, productBloc), context: context);
+          navTitle: "", pageBody: pageBody(false, productBloc, context), context: context);
     }
   }
 }
 
-Widget pageBody(bool isIOS, ProductBloc productBloc) {
+Widget pageBody(bool isIOS, ProductBloc productBloc, BuildContext context) {
 
-  List<String> items = List<String>();
-  items.add("Pounds");
-  items.add("Single");
+  var items = Provider.of<List<String>>(context);
 
   return ListView(
     children: <Widget>[
@@ -65,11 +63,18 @@ Widget pageBody(bool isIOS, ProductBloc productBloc) {
           );
         }
       ),
-      AppDropdownButton(
-        hintText: "Unit type",
-        items: items,
-        materialIcon: FontAwesomeIcons.balanceScale,
-        cupertinoIcon: FontAwesomeIcons.balanceScale,
+      StreamBuilder<String>(
+        stream: productBloc.unitType,
+        builder: (context, snapshot) {
+          return AppDropdownButton(
+            hintText: "Unit type",
+            items: items,
+            value: snapshot.data,
+            materialIcon: FontAwesomeIcons.balanceScale,
+            cupertinoIcon: FontAwesomeIcons.balanceScale,
+            onChanged: productBloc.changeUnitType,
+          );
+        }
       ),
       StreamBuilder<double>(
         stream: productBloc.unitPrice,
@@ -103,9 +108,14 @@ Widget pageBody(bool isIOS, ProductBloc productBloc) {
         buttonText: "Add image",
         buttonType: ButtonType.BorderTextfield,
       ),
-      AppButton(
-        buttonText: "Save product",
-        buttonType: ButtonType.DarkBlue,
+      StreamBuilder<bool>(
+        stream: productBloc.isValid,
+        builder: (context, snapshot) {
+          return AppButton(
+            buttonText: "Save product",
+            buttonType: (snapshot.data == true) ? ButtonType.DarkBlue : ButtonType.Disabled,
+          );
+        }
       ),
     ],
   );
