@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 abstract class AppNavbar {
   static CupertinoSliverNavigationBar cupertinoNavBar(
-      {@required String title}) {
+      {@required String title, @required BuildContext context}) {
     return CupertinoSliverNavigationBar(
       largeTitle: Text(
         title,
@@ -13,11 +13,21 @@ abstract class AppNavbar {
       ),
       backgroundColor: Colors.transparent,
       border: null,
+      leading: GestureDetector(
+        child: Icon(
+          CupertinoIcons.back,
+          color: AppColors.bordertextfield,
+        ),
+        onTap: () => Navigator.of(context).pop(),
+      ),
     );
   }
 
-  static SliverAppBar materialNavBar(
-      {@required String title, TabBar tabBar, bool pinned,}) {
+  static SliverAppBar materialNavBar({
+    @required String title,
+    TabBar tabBar,
+    bool pinned,
+  }) {
     return SliverAppBar(
       title: Text(
         title,

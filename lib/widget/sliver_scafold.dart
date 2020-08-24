@@ -5,12 +5,12 @@ import 'navbar.dart';
 abstract class AppSliverScaffold {
   
   static CupertinoPageScaffold cupertinoSliverScaffold(
-      {String navTitle, Widget pageBody}) {
+      {String navTitle, Widget pageBody, BuildContext context}) {
     return CupertinoPageScaffold(
       child: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              AppNavbar.cupertinoNavBar(title: navTitle)
+              AppNavbar.cupertinoNavBar(title: navTitle, context: context)
             ];
           },
           body: pageBody),

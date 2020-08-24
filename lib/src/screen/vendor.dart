@@ -11,21 +11,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Vendor extends StatefulWidget {
-  
-  StreamSubscription _userSubscription;
-
   @override
   _VendorState createState() => _VendorState();
 }
 
 class _VendorState extends State<Vendor> {
+
+  StreamSubscription _userSubscription;
   
   @override
   void initState() {
     Future.delayed(Duration.zero, (){
       var authBloc = Provider.of<AuthBloc>(context, listen: false);
       
-      widget._userSubscription = authBloc.user.listen((user) {
+      _userSubscription = authBloc.user.listen((user) {
         if(user==null) Navigator.of(context).pushNamedAndRemoveUntil("/login", (route) => false);
       });
     });
@@ -35,7 +34,7 @@ class _VendorState extends State<Vendor> {
 
   @override
   void dispose() {
-    widget._userSubscription.cancel();
+    _userSubscription.cancel();
     super.dispose();
   }
   
@@ -44,7 +43,7 @@ class _VendorState extends State<Vendor> {
     if(Platform.isIOS){
       return CupertinoPageScaffold(child: NestedScrollView(headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled){
         return <Widget> [
-          AppNavbar.cupertinoNavBar(title: "Vendor name")
+          AppNavbar.cupertinoNavBar(title: "Vendor name", context: context)
         ];
       }, body: Center(child: VendorScaffold.cupertinoTabScaffold)));
     }else{

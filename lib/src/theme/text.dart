@@ -10,6 +10,13 @@ abstract class TextStyles {
           fontSize: 16.0,
         ),
       );
+  
+  static TextStyle get picker => GoogleFonts.roboto(
+        textStyle: TextStyle(
+          color: AppColors.darkgray,
+          fontSize: 35.0,
+        ),
+      );
 
   static TextStyle get title => GoogleFonts.poppins(
         textStyle: TextStyle(
