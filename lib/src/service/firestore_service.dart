@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmers_market/src/model/product.dart';
 import 'package:farmers_market/src/model/user.dart';
 
 class FirestoreService {
@@ -17,9 +18,16 @@ class FirestoreService {
   }
 
   Stream<List<String>> fetchUnitTypes() {
+    return _db.collection("types").document("units").snapshots().map(
+        (snapshot) => snapshot.data["production"]
+            .map<String>((type) => type.toString())
+            .toList());
+  }
+
+  Future<void> addProduct(Product product) {
     return _db
-        .collection("types").document("units")
-        .snapshots().map((snapshot) => snapshot.data["production"]
-        .map<String>((type) => type.toString()).toList());
+        .collection("products")
+        .document(product.productId)
+        .setData(product.toMap());
   }
 }
