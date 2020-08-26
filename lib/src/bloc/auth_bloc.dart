@@ -10,6 +10,7 @@ final RegExp regExpEmail = RegExp(
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
 
 class AuthBloc{
+  
   final _email = BehaviorSubject<String>();
   final _password = BehaviorSubject<String>();
   final _user = BehaviorSubject<User>();
@@ -24,6 +25,7 @@ class AuthBloc{
   Stream<bool> get isValid => CombineLatestStream.combine2(email, password, (email, password) => true);
   Stream<User> get user => _user.stream;
   Stream<String> get errorMessage => _errorMessage.stream;
+  String get userId => _user.value.userId;
 
   //Set data
   Function(String) get changeEmail => _email.sink.add;
