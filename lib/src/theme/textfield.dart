@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'base.dart';
 
 abstract class TextFieldStyles {
+  
   static double get textBoxHorizontal => BaseStyles.listFieldHorizontal;
 
   static double get textBoxVertical => BaseStyles.listFieldVertical;

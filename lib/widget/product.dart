@@ -5,6 +5,7 @@ import 'package:farmers_market/src/bloc/auth_bloc.dart';
 import 'package:farmers_market/src/bloc/product_bloc.dart';
 import 'package:farmers_market/src/model/product.dart';
 import 'package:farmers_market/src/theme/color.dart';
+import 'package:farmers_market/widget/card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,7 @@ class Products extends StatelessWidget {
 Widget pageBody(
     ProductBloc productBloc, BuildContext context, String vendorId) {
   return StreamBuilder<List<Product>>(
-      stream: productBloc.ProductByVendorId(vendorId),
+      stream: productBloc.productByVendorId(vendorId),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return (Platform.isIOS)
@@ -53,10 +54,13 @@ Widget pageBody(
         return ListView.builder(
           itemCount: snapshot.data.length,
           itemBuilder: (context, index){
-
             var product = snapshot.data[index];
-
-            return Text(product.productName);
+            return AppCard(
+              availableUnits: product.availableUnits,
+              price: product.unitPrice,
+              productName: product.productName,
+              unitType: product.unitType,
+            );
           },
         );
       });
