@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:cupertino_toolbar/cupertino_toolbar.dart';
-import 'package:farmers_market/src/app.dart';
+//import 'package:farmers_market/src/app.dart';
 import 'package:farmers_market/src/bloc/auth_bloc.dart';
 import 'package:farmers_market/src/bloc/product_bloc.dart';
 import 'package:farmers_market/src/model/product.dart';
@@ -53,13 +53,18 @@ Widget pageBody(
 
         return ListView.builder(
           itemCount: snapshot.data.length,
-          itemBuilder: (context, index){
+          itemBuilder: (context, index) {
+
             var product = snapshot.data[index];
-            return AppCard(
-              availableUnits: product.availableUnits,
-              price: product.unitPrice,
-              productName: product.productName,
-              unitType: product.unitType,
+            
+            return GestureDetector(
+              child: AppCard(
+                availableUnits: product.availableUnits,
+                price: product.unitPrice,
+                productName: product.productName,
+                unitType: product.unitType,
+              ),
+              onTap: () => Navigator.of(context).pushNamed("/editproduct/${product.productId}"),
             );
           },
         );
