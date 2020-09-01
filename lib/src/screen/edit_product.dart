@@ -1,5 +1,4 @@
 import 'dart:io';
-//import 'package:farmers_market/src/app.dart';
 import 'package:farmers_market/src/bloc/auth_bloc.dart';
 import 'package:farmers_market/src/bloc/product_bloc.dart';
 import 'package:farmers_market/src/model/product.dart';
@@ -12,6 +11,7 @@ import 'package:farmers_market/widget/sliver_scafold.dart';
 import 'package:farmers_market/widget/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -28,8 +28,20 @@ class _EditProductState extends State<EditProduct> {
   @override
   void initState() {
     var productBloc = Provider.of<ProductBloc>(context, listen: false);
+
     productBloc.productSaved.listen((saved) {
-      if (saved != null && saved == true) Navigator.of(context).pop();
+      if (saved != null && saved == true && context != null){
+        Fluttertoast.showToast(
+            msg: "Product saved",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 2,
+            backgroundColor: AppColors.lightblue,
+            textColor: Colors.white,
+            fontSize: 16.0);
+
+        Navigator.of(context).pop();
+      }
     });
 
     super.initState();
@@ -44,12 +56,14 @@ class _EditProductState extends State<EditProduct> {
       future: productBloc.fetchProduct(widget.productId),
       builder: (context, snapshot) {
         if (!snapshot.hasData && widget.productId != null) {
-          return Center(
-              child: (Platform.isIOS)
-                  ? CupertinoActivityIndicator()
-                  : CircularProgressIndicator());
+          return Scaffold(
+            body: Center(
+                child: (Platform.isIOS)
+                    ? CupertinoActivityIndicator()
+                    : CircularProgressIndicator()),
+          );
         }
-        
+
         Product existingProduct;
 
         if (widget.productId != null) {
@@ -76,11 +90,12 @@ class _EditProductState extends State<EditProduct> {
   Widget pageBody(bool isIOS, ProductBloc productBloc, BuildContext context,
       Product existingProduct) {
     var items = Provider.of<List<String>>(context);
+    var pageLabel = (existingProduct != null) ? "Edit product" : "Add product";
 
     return ListView(
       children: <Widget>[
         Text(
-          "Add product",
+          pageLabel,
           style: TextStyles.subtitle,
           textAlign: TextAlign.center,
         ),
@@ -170,7 +185,6 @@ class _EditProductState extends State<EditProduct> {
 }
 
 void loadValues(ProductBloc productBloc, Product product, String vendorId) {
-
   productBloc.changeProduct(product);
   productBloc.changeVendorId(vendorId);
 

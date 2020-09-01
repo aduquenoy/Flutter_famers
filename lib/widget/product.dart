@@ -1,6 +1,5 @@
 import 'dart:io';
-import 'package:cupertino_toolbar/cupertino_toolbar.dart';
-//import 'package:farmers_market/src/app.dart';
+//import 'package:cupertino_toolbar/cupertino_toolbar.dart';
 import 'package:farmers_market/src/bloc/auth_bloc.dart';
 import 'package:farmers_market/src/bloc/product_bloc.dart';
 import 'package:farmers_market/src/model/product.dart';
@@ -16,28 +15,7 @@ class Products extends StatelessWidget {
     var productBloc = Provider.of<ProductBloc>(context);
     var authBloc = Provider.of<AuthBloc>(context);
 
-    if (Platform.isIOS) {
-      return CupertinoPageScaffold(
-        child: CupertinoToolbar(
-          items: <CupertinoToolbarItem>[
-            CupertinoToolbarItem(
-              icon: CupertinoIcons.add_circled,
-              onPressed: () => Navigator.of(context).pushNamed("/editproduct"),
-            ),
-          ],
-          body: pageBody(productBloc, context, authBloc.userId),
-        ),
-      );
-    } else {
-      return Scaffold(
-        body: pageBody(productBloc, context, authBloc.userId),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.bordertextfield,
-          child: Icon(Icons.add),
-          onPressed: () => Navigator.of(context).pushNamed("/editproduct"),
-        ),
-      );
-    }
+    return pageBody(productBloc, context, authBloc.userId);
   }
 }
 
@@ -51,22 +29,39 @@ Widget pageBody(
               ? CupertinoActivityIndicator()
               : CircularProgressIndicator();
 
-        return ListView.builder(
-          itemCount: snapshot.data.length,
-          itemBuilder: (context, index) {
+        return Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  var product = snapshot.data[index];
 
-            var product = snapshot.data[index];
-            
-            return GestureDetector(
-              child: AppCard(
-                availableUnits: product.availableUnits,
-                price: product.unitPrice,
-                productName: product.productName,
-                unitType: product.unitType,
+                  return GestureDetector(
+                    child: AppCard(
+                      availableUnits: product.availableUnits,
+                      price: product.unitPrice,
+                      productName: product.productName,
+                      unitType: product.unitType,
+                    ),
+                    onTap: () => Navigator.of(context)
+                        .pushNamed("/editproduct/${product.productId}"),
+                  );
+                },
               ),
-              onTap: () => Navigator.of(context).pushNamed("/editproduct/${product.productId}"),
-            );
-          },
+            ),
+            GestureDetector(
+              child: Container(
+                height: 50.0,
+                width: double.infinity,
+                color: AppColors.bordertextfield,
+                child: (Platform.isIOS)
+                    ? Icon(CupertinoIcons.add, color: Colors.white, size: 35.0)
+                    : Icon(Icons.add, color: Colors.white, size: 35.0),
+              ),
+              onTap: () => Navigator.of(context).pushNamed("/editproduct"),
+            )
+          ],
         );
       });
 }
