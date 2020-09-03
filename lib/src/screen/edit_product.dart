@@ -30,7 +30,7 @@ class _EditProductState extends State<EditProduct> {
     var productBloc = Provider.of<ProductBloc>(context, listen: false);
 
     productBloc.productSaved.listen((saved) {
-      if (saved != null && saved == true && context != null){
+      if (saved != null && saved == true && context != null) {
         Fluttertoast.showToast(
             msg: "Product saved",
             toastLength: Toast.LENGTH_LONG,
@@ -164,10 +164,39 @@ class _EditProductState extends State<EditProduct> {
                 onChanged: productBloc.changeAvailableUnits,
               );
             }),
-        AppButton(
-          buttonText: "Add image",
-          buttonType: ButtonType.BorderTextfield,
+        StreamBuilder<bool>(
+          stream: productBloc.isUploading,
+          builder: (context, snapshot) {
+            return (!snapshot.hasData || snapshot.data == false)
+                ? Container()
+                : Center(
+                    child: (Platform.isIOS)
+                        ? CupertinoActivityIndicator()
+                        : CircularProgressIndicator());
+          },
         ),
+        StreamBuilder<String>(
+            stream: productBloc.imageUrl,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData || snapshot.data == "")
+                return AppButton(
+                  buttonText: "Add image",
+                  buttonType: ButtonType.BorderTextfield,
+                  onPressed: productBloc.pickImage,
+                );
+
+              return Column(children: <Widget>[
+                Padding(
+                  padding: BaseStyles.listPadding,
+                  child: Image.network(snapshot.data),
+                ),
+                AppButton(
+                  buttonText: "Change image",
+                  buttonType: ButtonType.BorderTextfield,
+                  onPressed: productBloc.pickImage,
+                ),
+              ]);
+            }),
         StreamBuilder<bool>(
             stream: productBloc.isValid,
             builder: (context, snapshot) {
@@ -193,10 +222,12 @@ void loadValues(ProductBloc productBloc, Product product, String vendorId) {
     productBloc.changeProductName(product.productName);
     productBloc.changeUnitPrice(product.unitPrice.toString());
     productBloc.changeAvailableUnits(product.availableUnits.toString());
+    productBloc.changeImageUrl(product.imageUrl ?? "");
   } else {
     productBloc.changeUnitType(null);
     productBloc.changeProductName(null);
     productBloc.changeUnitPrice(null);
     productBloc.changeAvailableUnits(null);
+    productBloc.changeImageUrl("");
   }
 }

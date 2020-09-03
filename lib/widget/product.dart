@@ -1,5 +1,4 @@
 import 'dart:io';
-//import 'package:cupertino_toolbar/cupertino_toolbar.dart';
 import 'package:farmers_market/src/bloc/auth_bloc.dart';
 import 'package:farmers_market/src/bloc/product_bloc.dart';
 import 'package:farmers_market/src/model/product.dart';
@@ -43,6 +42,7 @@ Widget pageBody(
                       price: product.unitPrice,
                       productName: product.productName,
                       unitType: product.unitType,
+                      imageUrl: product.imageUrl,
                     ),
                     onTap: () => Navigator.of(context)
                         .pushNamed("/editproduct/${product.productId}"),
