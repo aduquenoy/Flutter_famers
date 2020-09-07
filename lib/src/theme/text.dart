@@ -51,6 +51,7 @@ abstract class TextStyles {
   static TextStyle get navTitle => GoogleFonts.poppins(
         textStyle: TextStyle(
           color: AppColors.darkblue,
+          fontSize: 30.0,
           fontWeight: FontWeight.bold,
         ),
       );

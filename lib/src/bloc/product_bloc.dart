@@ -88,7 +88,6 @@ class ProductBloc {
   pickImage() async {
     PickedFile image;
     File croppedFile;
-    File compressedFile;
 
     await Permission.photos.request();
     var permissionStatus = await Permission.photos.status;
