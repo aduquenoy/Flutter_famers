@@ -10,12 +10,14 @@ class AppListTile extends StatelessWidget {
   final String title;
   final String location;
   final bool acceptingOrders;
+  final String marketId;
 
   const AppListTile(
       {@required this.month,
       @required this.date,
       @required this.title,
       @required this.location,
+      @required this.marketId,
       this.acceptingOrders = false});
 
   @override
@@ -48,6 +50,9 @@ class AppListTile extends StatelessWidget {
                   color: AppColors.darkblue,
                 )
               : Text(""),
+          onTap: (acceptingOrders)
+              ? () => Navigator.of(context).pushNamed("/customer/$marketId")
+              : null,
         ),
         Padding(
           padding:

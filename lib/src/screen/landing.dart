@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:date_format/date_format.dart';
+import 'package:farmers_market/src/bloc/customer_bloc.dart';
+import 'package:farmers_market/src/model/market.dart';
 import 'package:farmers_market/src/theme/base.dart';
 import 'package:farmers_market/src/theme/color.dart';
 import 'package:farmers_market/src/theme/text.dart';
@@ -6,22 +9,26 @@ import 'package:farmers_market/widget/list_tile.dart';
 import 'package:farmers_market/widget/sliver_scafold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Landing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var customerBloc = Provider.of<CustomerBloc>(context);
+
     if (Platform.isIOS) {
       return AppSliverScaffold.cupertinoSliverScaffold(
           navTitle: "Upcoming markets",
-          pageBody: Scaffold(body: pageBody(context)));
+          pageBody: Scaffold(body: pageBody(context, customerBloc)));
     } else {
       return AppSliverScaffold.materialSliverScaffold(
-          navTitle: "Upcoming markets", pageBody: pageBody(context));
+          navTitle: "Upcoming markets",
+          pageBody: pageBody(context, customerBloc));
     }
   }
 }
 
-Widget pageBody(BuildContext context) {
+Widget pageBody(BuildContext context, CustomerBloc customerBloc) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
@@ -55,32 +62,33 @@ Widget pageBody(BuildContext context) {
         flex: 2,
       ),
       Flexible(
-        child: ListView(
-          children: <Widget>[
-            AppListTile(
-              date: "4",
-              title: "Anytown Farmer",
-              location: "1 main street",
-              month: "Oct",
-              acceptingOrders: true,
-            ),
-            AppListTile(
-                date: "4",
-                title: "Anytown Farmer",
-                location: "1 main street",
-                month: "Oct"),
-            AppListTile(
-                date: "4",
-                title: "Anytown Farmer",
-                location: "1 main street",
-                month: "Oct"),
-            AppListTile(
-                date: "4",
-                title: "Anytown Farmer",
-                location: "1 main street",
-                month: "Oct"),
-          ],
-        ),
+        child: StreamBuilder<List<Market>>(
+            stream: customerBloc.fetchUpcomingMarkets,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData)
+                return Center(
+                  child: (Platform.isIOS)
+                      ? CupertinoActivityIndicator()
+                      : CircularProgressIndicator(),
+                );
+
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var market = snapshot.data[index];
+                  var dateEnd = DateTime.parse(market.dateEnd);
+
+                  return AppListTile(
+                    month: formatDate(dateEnd, ["M"]),
+                    date: formatDate(dateEnd, ["d"]),
+                    title: market.title,
+                    location: "${market.location.name}, ${market.location.address}, ${market.location.city}, ${market.location.state}",
+                    acceptingOrders: market.acceptingOrders,
+                    marketId: market.marketId,
+                  );
+                },
+              );
+            }),
         flex: 3,
       )
     ],
