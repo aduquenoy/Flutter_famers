@@ -48,6 +48,14 @@ abstract class TextStyles {
         ),
       );
 
+  static TextStyle get listTitle => GoogleFonts.economica(
+        textStyle: TextStyle(
+          color: AppColors.bordertextfield,
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+
   static TextStyle get navTitle => GoogleFonts.poppins(
         textStyle: TextStyle(
           color: AppColors.darkblue,

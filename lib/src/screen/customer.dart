@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'package:farmers_market/src/bloc/auth_bloc.dart';
 import 'package:farmers_market/widget/navbar.dart';
-import 'package:farmers_market/widget/order.dart';
-import 'package:farmers_market/widget/product.dart';
-import 'package:farmers_market/widget/profile.dart';
+import 'package:farmers_market/widget/product_customer.dart';
 import 'package:farmers_market/widget/customer_scafold.dart';
+import 'package:farmers_market/widget/profile_customer.dart';
+import 'package:farmers_market/widget/shopping_bag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -60,9 +60,9 @@ class _CustomerState extends State<Customer> {
             ];
           },
           body: TabBarView(children: <Widget> [
-            Products(),
-            Orders(),
-            Profiles(),
+            ProductsCustomer(),
+            ShoppingBag(),
+            ProfileCustomer(),
           ]),
         )
       ));
