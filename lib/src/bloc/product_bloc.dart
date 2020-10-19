@@ -125,7 +125,7 @@ class ProductBloc {
     }
   }
 
-  //Validator
+  // Validator
   final validateUnitPrice = StreamTransformer<String, double>.fromHandlers(
       handleData: (unitPrice, sink) {
     if (unitPrice != null) {
