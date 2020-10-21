@@ -1,5 +1,6 @@
 import 'package:farmers_market/src/screen/customer.dart';
 import 'package:farmers_market/src/screen/edit_product.dart';
+import 'package:farmers_market/src/screen/edit_vendor.dart';
 import 'package:farmers_market/src/screen/landing.dart';
 import 'package:farmers_market/src/screen/signup.dart';
 import 'package:farmers_market/src/screen/vendor.dart';
@@ -20,6 +21,8 @@ abstract class Routes {
         return MaterialPageRoute(builder: (context) => Vendor());
       case "/editproduct":
         return MaterialPageRoute(builder: (context) => EditProduct());
+      case "/editvendor":
+        return MaterialPageRoute(builder: (context) => EditVendor());
       default:
         var routeArray = settings.name.split("/");
         if (settings.name.contains("/editproduct/")) {
@@ -45,6 +48,8 @@ abstract class Routes {
         return CupertinoPageRoute(builder: (context) => Vendor());
       case "/editproduct":
         return CupertinoPageRoute(builder: (context) => EditProduct());
+        case "/editvendor":
+        return CupertinoPageRoute(builder: (context) => EditVendor());
       default:
         var routeArray = settings.name.split("/");
         if (settings.name.contains("/editproduct/")) {

@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:farmers_market/src/bloc/auth_bloc.dart';
+//import 'package:farmers_market/src/bloc/auth_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
 class Profiles extends StatelessWidget {
   @override
@@ -15,8 +15,8 @@ class Profiles extends StatelessWidget {
   }
 
   Widget pageBody(BuildContext context) {
-    var authBloc = Provider.of<AuthBloc>(context);
-    return Center(
+    //var authBloc = Provider.of<AuthBloc>(context);
+    /*return Center(
       child: (Platform.isIOS)
           ? CupertinoButton(
               child: Text("Logout"),
@@ -25,6 +25,18 @@ class Profiles extends StatelessWidget {
           : FlatButton(
               onPressed: () => authBloc.logout(),
               child: Text("Logout"),
+            ),
+    );*/
+
+    return Center(
+      child: (Platform.isIOS)
+          ? CupertinoButton(
+              child: Text("Add"),
+              onPressed: () => Navigator.of(context).pushNamed("/editvendor"),
+            )
+          : FlatButton(
+              onPressed: () => Navigator.of(context).pushNamed("/editvendor"),
+              child: Text("Add"),
             ),
     );
   }
