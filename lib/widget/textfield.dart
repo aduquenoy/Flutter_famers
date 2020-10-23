@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatefulWidget {
-  
   final bool isIOS;
   final String hintText;
   final IconData materialIcon;
@@ -14,17 +13,20 @@ class AppTextField extends StatefulWidget {
   final void Function(String) onChanged;
   final String errorText;
   final String initialText;
+  final int maxLines;
 
-  AppTextField(
-      {@required this.isIOS,
-      @required this.hintText,
-      @required this.materialIcon,
-      @required this.cupertinoIcon,
-      this.textInputType = TextInputType.text,
-      this.obscureText = false,
-      this.onChanged,
-      this.errorText,
-      this.initialText});
+  AppTextField({
+    @required this.isIOS,
+    @required this.hintText,
+    @required this.materialIcon,
+    @required this.cupertinoIcon,
+    this.textInputType = TextInputType.text,
+    this.obscureText = false,
+    this.onChanged,
+    this.errorText,
+    this.initialText,
+    this.maxLines = 1,
+  });
 
   @override
   _AppTextFieldState createState() => _AppTextFieldState();
@@ -39,7 +41,7 @@ class _AppTextFieldState extends State<AppTextField> {
   void initState() {
     _node = FocusNode();
     _controller = TextEditingController();
-    if(widget.initialText != null) _controller.text = widget.initialText;
+    if (widget.initialText != null) _controller.text = widget.initialText;
     _node.addListener(_handleFocusChange);
     displayCupertinoErrorBorder = false;
     super.initState();
@@ -55,9 +57,9 @@ class _AppTextFieldState extends State<AppTextField> {
 
   void _handleFocusChange() {
     if (_node.hasFocus == false && widget.errorText != null) {
-      displayCupertinoErrorBorder=true;
-    }else{
-      displayCupertinoErrorBorder=false;
+      displayCupertinoErrorBorder = true;
+    } else {
+      displayCupertinoErrorBorder = false;
     }
 
     widget.onChanged(_controller.text);
@@ -81,11 +83,14 @@ class _AppTextFieldState extends State<AppTextField> {
               cursorColor: TextFieldStyles.cursorColor,
               textAlign: TextFieldStyles.textAlign,
               prefix: TextFieldStyles.iconPrefix(widget.cupertinoIcon),
-              decoration: (displayCupertinoErrorBorder) ? TextFieldStyles.cupertinoErrorDecoration : TextFieldStyles.cupertinoDecoration,
+              decoration: (displayCupertinoErrorBorder)
+                  ? TextFieldStyles.cupertinoErrorDecoration
+                  : TextFieldStyles.cupertinoDecoration,
               obscureText: widget.obscureText,
               onChanged: widget.onChanged,
               focusNode: _node,
               controller: _controller,
+              maxLines: widget.maxLines,
             ),
             (widget.errorText != null)
                 ? Padding(
@@ -118,6 +123,7 @@ class _AppTextFieldState extends State<AppTextField> {
           obscureText: widget.obscureText,
           controller: _controller,
           onChanged: widget.onChanged,
+          maxLines: widget.maxLines,
         ),
       );
     }

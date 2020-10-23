@@ -115,8 +115,8 @@ class _EditVendorState extends State<EditVendor> {
             builder: (context, snapshot) {
               return AppTextField(
                 hintText: "Vendor name",
-                cupertinoIcon: FontAwesomeIcons.shoppingBasket,
-                materialIcon: FontAwesomeIcons.shoppingBasket,
+                cupertinoIcon: FontAwesomeIcons.sign,
+                materialIcon: FontAwesomeIcons.sign,
                 isIOS: isIOS,
                 errorText: snapshot.error,
                 initialText:
@@ -129,8 +129,9 @@ class _EditVendorState extends State<EditVendor> {
             builder: (context, snapshot) {
               return AppTextField(
                 hintText: "Vendor description",
-                cupertinoIcon: FontAwesomeIcons.shoppingBasket,
-                materialIcon: FontAwesomeIcons.shoppingBasket,
+                maxLines: 7,
+                cupertinoIcon: FontAwesomeIcons.book,
+                materialIcon: FontAwesomeIcons.book,
                 isIOS: isIOS,
                 errorText: snapshot.error,
                 initialText: (existingVendor != null)
@@ -197,7 +198,7 @@ void loadValues(VendorBloc vendorBloc, Vendor vendor, String vendorId) {
     vendorBloc.changeDescription(vendor.description);
     vendorBloc.changeImageUrl(vendor.imageUrl ?? "");
   } else {
-    // Acdd
+    // Add
     vendorBloc.changeName(null);
     vendorBloc.changeDescription(null);
     vendorBloc.changeImageUrl("");

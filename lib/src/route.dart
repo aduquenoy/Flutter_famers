@@ -31,6 +31,9 @@ abstract class Routes {
         } else if (settings.name.contains("/customer/")) {
           return MaterialPageRoute(
               builder: (context) => Customer(marketId: routeArray[2]));
+        } else if (settings.name.contains("/editvendor/")){
+          return MaterialPageRoute(
+              builder: (context) => EditVendor(vendorId: routeArray[2]));
         }
         return MaterialPageRoute(builder: (context) => Login());
     }
@@ -52,13 +55,18 @@ abstract class Routes {
         return CupertinoPageRoute(builder: (context) => EditVendor());
       default:
         var routeArray = settings.name.split("/");
+
         if (settings.name.contains("/editproduct/")) {
           return CupertinoPageRoute(
               builder: (context) => EditProduct(productId: routeArray[2]));
         } else if (settings.name.contains("/customer/")) {
           return CupertinoPageRoute(
               builder: (context) => Customer(marketId: routeArray[2]));
+        } else if (settings.name.contains("/editvendor/")){
+          return CupertinoPageRoute(
+              builder: (context) => EditVendor(vendorId: routeArray[2]));
         }
+
         return CupertinoPageRoute(builder: (context) => Login());
     }
   }
