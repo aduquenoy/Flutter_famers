@@ -3,6 +3,7 @@ import 'package:farmers_market/src/model/application_user.dart';
 import 'package:farmers_market/src/service/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -18,6 +19,8 @@ class AuthBloc{
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirestoreService _firestoreService = FirestoreService();
+
+  final googleSignin = GoogleSignIn(scopes: ["email"]);
 
   //Get data
   Stream<String> get email => _email.stream.transform(validateEmail);
@@ -76,6 +79,37 @@ class AuthBloc{
     } on PlatformException catch(error){
       print(error);
       _errorMessage.sink.add(error.message);
+    }
+  }
+
+  signinGoogle() async {
+    try{
+      final GoogleSignInAccount googleUser = await googleSignin.signIn();
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+
+      //Sign in to firebase
+      final result = await _auth.signInWithCredential(credential);
+
+      //Check if user exists
+      var existingUser = await _firestoreService.fetchUser(result.user.uid);
+      var user = ApplicationUser(email: result.user.email, userId: result.user.uid);
+
+      if(existingUser == null){
+        await _firestoreService.addUser(user);
+        _user.sink.add(user);
+      }else{
+        _user.sink.add(user);
+      }
+    } on PlatformException catch (error){
+      print(error);
+      _errorMessage.sink.add(error.message);
+    } on FirebaseAuthException catch (error){
+      print(error);
+      _errorMessage.sink.add(error.message);
+    } catch (error){
+      _errorMessage.sink.add("Google Auth failed");
+      print(error.toString());
     }
   }
 

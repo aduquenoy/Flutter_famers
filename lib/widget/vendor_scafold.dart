@@ -16,9 +16,9 @@ abstract class VendorScaffold{
 
   static get _cupertinoTabBar{
     return CupertinoTabBar(backgroundColor: AppColors.darkblue, items: <BottomNavigationBarItem>[
-      BottomNavigationBarItem(icon: Icon(CupertinoIcons.create), title: Text("Products")),
-      BottomNavigationBarItem(icon: Icon(CupertinoIcons.shopping_cart), title: Text("Orders")),
-      BottomNavigationBarItem(icon: Icon(CupertinoIcons.person), title: Text("Profile"))
+      BottomNavigationBarItem(icon: Icon(CupertinoIcons.create), label: "Products"),
+      BottomNavigationBarItem(icon: Icon(CupertinoIcons.shopping_cart), label: "Orders"),
+      BottomNavigationBarItem(icon: Icon(CupertinoIcons.person), label: "Profile")
     ],);
   }
 
